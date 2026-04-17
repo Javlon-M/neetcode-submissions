@@ -1,0 +1,29 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        # i need to know how to deep copy of list
+        current = head
+        old_to_new = {None: None}
+        
+        # copy old node to hashmap
+        while current:
+            old_to_new[current] = Node(current.val)
+            current = current.next
+        
+        # get new node
+        current = head
+        while current:
+            new_node = old_to_new[current]
+            new_node.next = old_to_new[current.next]
+            new_node.random = old_to_new[current.random]
+            current = current.next
+            
+        return old_to_new[head]
